@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>授权信息查询</title>
+    <style>
+        *{box-sizing: border-box;margin:0;padding:0;font-family:system-ui, sans-serif;}
+        body{background:#f5f7fa;padding:20px;}
+        .box{max-width:500px;margin:0 auto;background:#fff;padding:30px;border-radius:12px;box-shadow:0 2px 12px #00000015;}
+        .title{font-size:22px;font-weight:bold;margin-bottom:20px;text-align:center;}
+        .item{margin:12px 0;font-size:16px;line-height:1.7;}
+        .expire{color:#dc2626;font-size:24px;font-weight:bold;text-align:center;margin:30px 0;}
+        .label{display:inline-block;width:110px;color:#555;}
+    </style>
+</head>
+<body>
+<div class="box">
+    <div id="content"></div>
+</div>
+
+<script>
+// ==========【这里修改你的配置】==========
+// 授权到期时间，格式：年,月,日  注意月份0=1月，11=12月！！！
+const expireDate = new Date(2026, 11, 31); //示例：2026‑12‑31到期
+// 授权信息，有效期内展示
+const authInfo = {
+    authNo: "SQ20260001",
+    authCompany: "某某有限公司",
+    authScope: "某某产品销售授权",
+    authStart: "2026‑01‑01",
+    authEnd: "2026‑12‑31"
+};
+// ========================================
+
+const now = new Date();
+const dom = document.getElementById("content");
+
+if(now <= expireDate){
+    // 没过期：展示授权信息
+    dom.innerHTML = `
+        <div class="title">授权信息</div>
+        <div class="item"><span class="label">授权编号：</span>${authInfo.authNo}</div>
+        <div class="item"><span class="label">被授权方：</span>${authInfo.authCompany}</div>
+        <div class="item"><span class="label">授权范围：</span>${authInfo.authScope}</div>
+        <div class="item"><span class="label">授权起始：</span>${authInfo.authStart}</div>
+        <div class="item"><span class="label">授权有效期至：</span>${authInfo.authEnd}</div>
+    `;
+}else{
+    // 已经过期：只显示过期
+    dom.innerHTML = `
+        <div class="expire">⚠️该授权已过期</div>
+        <div style="text-align:center;color:#666;">此授权超出有效期限，请核实最新授权文件</div>
+    `;
+}
+</script>
+</body>
+</html>
